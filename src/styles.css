@@ -61,6 +61,23 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme inline {
+  --color-cocoa: var(--cocoa);
+  --color-walnut: var(--walnut);
+  --color-cream: var(--cream);
+  --color-beige: var(--beige);
+  --color-taupe: var(--taupe);
+  --color-rose: var(--rose);
+  --color-sage: var(--sage);
+  --color-gold: var(--gold);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-hand: var(--font-hand);
+  --shadow-object: var(--shadow-object);
+  --shadow-lift: var(--shadow-lift);
+  --shadow-paper: var(--shadow-paper);
+}
+
 :root {
   --radius: 0.5rem;
   --background: oklch(0.958 0.016 82);
