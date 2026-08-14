@@ -14,16 +14,270 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      album_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bouquet: {
+        Row: {
+          description: string | null
+          id: string
+          image_url: string | null
+          message: string
+          title: string
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          message?: string
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          message?: string
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
+      gifts: {
+        Row: {
+          created_at: string
+          description: string | null
+          gift_date: string | null
+          id: string
+          image_url: string | null
+          name: string
+          personal_message: string | null
+          sort_order: number
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          gift_date?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          personal_message?: string | null
+          sort_order?: number
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          gift_date?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          personal_message?: string | null
+          sort_order?: number
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
+      letter: {
+        Row: {
+          content: string
+          heading: string
+          id: string
+          letter_date: string | null
+          signature: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string
+          heading?: string
+          id?: string
+          letter_date?: string | null
+          signature?: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          heading?: string
+          id?: string
+          letter_date?: string | null
+          signature?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      photos: {
+        Row: {
+          caption: string | null
+          category_id: string | null
+          created_at: string
+          description: string | null
+          featured: boolean
+          id: string
+          image_url: string
+          sort_order: number
+          taken_on: string | null
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          caption?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          image_url: string
+          sort_order?: number
+          taken_on?: string | null
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          caption?: string | null
+          category_id?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string
+          sort_order?: number
+          taken_on?: string | null
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "photos_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "album_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          album_intro: string
+          birthday_date: string | null
+          bouquet_message: string
+          closing_message: string
+          final_heading: string
+          final_message: string
+          id: string
+          letter_title: string
+          music_enabled: boolean
+          music_url: string | null
+          opening_button_text: string
+          opening_heading: string
+          opening_message: string
+          recipient_name: string
+          signature: string
+          updated_at: string
+        }
+        Insert: {
+          album_intro?: string
+          birthday_date?: string | null
+          bouquet_message?: string
+          closing_message?: string
+          final_heading?: string
+          final_message?: string
+          id?: string
+          letter_title?: string
+          music_enabled?: boolean
+          music_url?: string | null
+          opening_button_text?: string
+          opening_heading?: string
+          opening_message?: string
+          recipient_name?: string
+          signature?: string
+          updated_at?: string
+        }
+        Update: {
+          album_intro?: string
+          birthday_date?: string | null
+          bouquet_message?: string
+          closing_message?: string
+          final_heading?: string
+          final_message?: string
+          id?: string
+          letter_title?: string
+          music_enabled?: boolean
+          music_url?: string | null
+          opening_button_text?: string
+          opening_heading?: string
+          opening_message?: string
+          recipient_name?: string
+          signature?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +404,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
