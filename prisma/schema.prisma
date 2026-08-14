@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model SiteSettings {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  recipient_name      String    @default("Iram")
+  opening_heading     String    @default("Hey Iram…")
+  opening_message     String    @default("I made you a little something for your birthday.")
+  opening_button_text String    @default("Open your surprise")
+  album_intro         String    @default("A few memories I wanted to keep in one place. Don't judge the amount of photos.")
+  letter_title        String    @default("Read this first")
+  bouquet_message     String    @default("Every birthday deserves a little extra colour. ♡")
+  final_heading       String    @default("Happy Birthday, Iram ♡")
+  final_message       String    @default("Another year of you being you.\n\nI hope this year gives you a hundred little reasons to smile, lots of moments worth remembering, and everything you've been wishing for.\n\nI'm really lucky I get to call you my sister.")
+  closing_message     String    @default("Now go enjoy your day — you've officially unlocked all your presents.")
+  signature           String    @default("Your sister")
+  birthday_date       DateTime? @db.Date
+  music_url           String?
+  music_enabled       Boolean   @default(false)
+  updated_at          DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@map("site_settings")
+}
+
+model Category {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  sort_order Int      @default(0)
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+  photos     Photo[]
+
+  @@map("album_categories")
+}
+
+model Photo {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  image_url   String
+  caption     String?
+  description String?
+  category_id String?   @db.Uuid
+  taken_on    DateTime? @db.Date
+  sort_order  Int       @default(0)
+  featured    Boolean   @default(false)
+  visible     Boolean   @default(true)
+  created_at  DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime  @default(now()) @db.Timestamptz(6)
+  category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull)
+
+  @@map("photos")
+}
+
+model Letter {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  heading     String    @default("A little birthday note from me")
+  content     String    @default("")
+  signature   String    @default("Your sister")
+  letter_date DateTime? @db.Date
+  updated_at  DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@map("letter")
+}
+
+model Bouquet {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String   @default("Flowers, obviously")
+  message     String   @default("Every birthday deserves a little extra colour. ♡")
+  description String?
+  image_url   String?
+  visible     Boolean  @default(true)
+  updated_at  DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("bouquet")
+}
+
+model Gift {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String
+  image_url        String?
+  description      String?
+  personal_message String?
+  gift_date        DateTime? @db.Date
+  sort_order       Int       @default(0)
+  visible          Boolean   @default(true)
+  created_at       DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime  @default(now()) @db.Timestamptz(6)
+
+  @@map("gifts")
+}
