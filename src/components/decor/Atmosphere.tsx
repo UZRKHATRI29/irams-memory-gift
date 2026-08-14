@@ -1,9 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type PetalsProps = { count?: number; className?: string };
 
 /** Soft petals drifting upward. Positions are generated lazily on first render. */
 export function Petals({ count = 14, className = "" }: PetalsProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const petals = useMemo(
     () =>
       Array.from({ length: count }).map((_, i) => ({
@@ -17,6 +19,8 @@ export function Petals({ count = 14, className = "" }: PetalsProps) {
       })),
     [count],
   );
+
+  if (!mounted) return null;
 
   return (
     <div
