@@ -47,7 +47,7 @@ export const getPhotosFn = createServerFn()
   .handler(async ({ data }) => {
     try {
       const rows = await prisma.photo.findMany({
-        where: data?.includeHidden ? undefined : { visible: true },
+        ...(data?.includeHidden ? {} : { where: { visible: true } }),
         orderBy: [{ sort_order: "asc" }, { created_at: "desc" }],
       });
       return rows as unknown as Photo[];
@@ -99,7 +99,7 @@ export const getGiftsFn = createServerFn()
   .handler(async ({ data }) => {
     try {
       const rows = await prisma.gift.findMany({
-        where: data?.includeHidden ? undefined : { visible: true },
+        ...(data?.includeHidden ? {} : { where: { visible: true } }),
         orderBy: [{ sort_order: "asc" }, { created_at: "desc" }],
       });
       return rows as unknown as Gift[];

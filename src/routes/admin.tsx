@@ -825,9 +825,9 @@ function BouquetEditor() {
 
       await updateBouquetFn({
         data: {
-          title: form.title,
-          message: form.message,
-          image_url: imagePath,
+          title: form.title ?? "",
+          message: form.message ?? "",
+          image_url: imagePath ?? null,
         },
       });
 
