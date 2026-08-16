@@ -55,7 +55,7 @@ export function LeafBranch({ className = "" }: { className?: string }) {
         return (
           <path
             key={i}
-            d={`M${58 - i} ${y}c${dir * 22} -14 ${dir * 34} -4 ${dir * 36} 6-${dir * 20} 8-${dir * 30} 4-${dir * 36} -6z`}
+            d={`M${58 - i} ${y}c${dir * 22} -14 ${dir * 34} -4 ${dir * 36} 6 ${dir * -20} 8 ${dir * -30} 4 ${dir * -36} -6z`}
             stroke="currentColor"
             strokeWidth="0.9"
             fill="none"
