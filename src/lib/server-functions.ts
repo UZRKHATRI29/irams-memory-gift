@@ -3,7 +3,7 @@ import { prisma, rawQuery } from "./db";
 import type { SiteSettings, Category, Photo, Letter, Bouquet, Gift } from "./content";
 
 // --- GETTERS ---
-export const getSettingsFn = createServerFn({ method: "GET" }).handler(async () => {
+export const getSettingsFn = createServerFn().handler(async () => {
   try {
     const row = await prisma.siteSettings.findFirst();
     if (row) return row as unknown as SiteSettings;
@@ -14,7 +14,7 @@ export const getSettingsFn = createServerFn({ method: "GET" }).handler(async () 
   return rows[0] ?? null;
 });
 
-export const getCategoriesFn = createServerFn({ method: "GET" }).handler(async () => {
+export const getCategoriesFn = createServerFn().handler(async () => {
   try {
     const rows = await prisma.category.findMany({
       orderBy: [{ sort_order: "asc" }, { created_at: "asc" }],
@@ -26,7 +26,7 @@ export const getCategoriesFn = createServerFn({ method: "GET" }).handler(async (
   return await rawQuery<Category>("SELECT * FROM album_categories ORDER BY sort_order ASC, created_at ASC");
 });
 
-export const getPhotosFn = createServerFn({ method: "GET" })
+export const getPhotosFn = createServerFn()
   .validator((d: { includeHidden?: boolean }) => d)
   .handler(async ({ data }) => {
     try {
@@ -44,7 +44,7 @@ export const getPhotosFn = createServerFn({ method: "GET" })
     }
   });
 
-export const getLetterFn = createServerFn({ method: "GET" }).handler(async () => {
+export const getLetterFn = createServerFn().handler(async () => {
   try {
     const row = await prisma.letter.findFirst();
     if (row) return row as unknown as Letter;
@@ -55,7 +55,7 @@ export const getLetterFn = createServerFn({ method: "GET" }).handler(async () =>
   return rows[0] ?? null;
 });
 
-export const getBouquetFn = createServerFn({ method: "GET" }).handler(async () => {
+export const getBouquetFn = createServerFn().handler(async () => {
   try {
     const row = await prisma.bouquet.findFirst();
     if (row) return row as unknown as Bouquet;
@@ -66,7 +66,7 @@ export const getBouquetFn = createServerFn({ method: "GET" }).handler(async () =
   return rows[0] ?? null;
 });
 
-export const getGiftsFn = createServerFn({ method: "GET" })
+export const getGiftsFn = createServerFn()
   .validator((d: { includeHidden?: boolean }) => d)
   .handler(async ({ data }) => {
     try {
@@ -85,7 +85,7 @@ export const getGiftsFn = createServerFn({ method: "GET" })
   });
 
 // --- MUTATIONS ---
-export const updateSettingsFn = createServerFn({ method: "POST" })
+export const updateSettingsFn = createServerFn()
   .validator((d: Partial<SiteSettings>) => d)
   .handler(async ({ data }) => {
     try {
@@ -150,7 +150,7 @@ export const updateSettingsFn = createServerFn({ method: "POST" })
     }
   });
 
-export const addCategoryFn = createServerFn({ method: "POST" })
+export const addCategoryFn = createServerFn()
   .validator((d: { name: string; sort_order: number }) => d)
   .handler(async ({ data }) => {
     try {
@@ -166,7 +166,7 @@ export const addCategoryFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const deleteCategoryFn = createServerFn({ method: "POST" })
+export const deleteCategoryFn = createServerFn()
   .validator((d: { id: string }) => d)
   .handler(async ({ data }) => {
     try {
@@ -179,7 +179,7 @@ export const deleteCategoryFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const addPhotoFn = createServerFn({ method: "POST" })
+export const addPhotoFn = createServerFn()
   .validator(
     (d: {
       image_url: string;
@@ -218,7 +218,7 @@ export const addPhotoFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const togglePhotoVisibilityFn = createServerFn({ method: "POST" })
+export const togglePhotoVisibilityFn = createServerFn()
   .validator((d: { id: string; visible: boolean }) => d)
   .handler(async ({ data }) => {
     try {
@@ -232,7 +232,7 @@ export const togglePhotoVisibilityFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const deletePhotoFn = createServerFn({ method: "POST" })
+export const deletePhotoFn = createServerFn()
   .validator((d: { id: string }) => d)
   .handler(async ({ data }) => {
     try {
@@ -245,7 +245,7 @@ export const deletePhotoFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const updateLetterFn = createServerFn({ method: "POST" })
+export const updateLetterFn = createServerFn()
   .validator((d: Partial<Letter>) => d)
   .handler(async ({ data }) => {
     try {
@@ -285,7 +285,7 @@ export const updateLetterFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const updateBouquetFn = createServerFn({ method: "POST" })
+export const updateBouquetFn = createServerFn()
   .validator((d: { title?: string; message?: string; image_url?: string | null }) => d)
   .handler(async ({ data }) => {
     try {
@@ -325,7 +325,7 @@ export const updateBouquetFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const addGiftFn = createServerFn({ method: "POST" })
+export const addGiftFn = createServerFn()
   .validator(
     (d: {
       name: string;
@@ -356,7 +356,7 @@ export const addGiftFn = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const deleteGiftFn = createServerFn({ method: "POST" })
+export const deleteGiftFn = createServerFn()
   .validator((d: { id: string }) => d)
   .handler(async ({ data }) => {
     try {
