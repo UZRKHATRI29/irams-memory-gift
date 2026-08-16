@@ -18,6 +18,7 @@ const globalForDb = globalThis as unknown as DbGlobals;
 function createPool() {
   const nextPool = new pg.Pool({
     connectionString,
+    port: Number(new URL(connectionString).port || 5432),
     ssl: { rejectUnauthorized: false },
     max: 3,
     idleTimeoutMillis: 10_000,
