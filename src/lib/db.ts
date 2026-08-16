@@ -1,6 +1,4 @@
 import pg from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@/generated/prisma/client";
 
 const connectionString =
   process.env['DATABASE_URL'] ||
@@ -10,7 +8,6 @@ const connectionString =
 
 type DbGlobals = {
   pool?: pg.Pool;
-  prisma?: PrismaClient;
 };
 
 const globalForDb = globalThis as unknown as DbGlobals;
@@ -33,19 +30,10 @@ function createPool() {
   return nextPool;
 }
 
-function createPrismaClient(nextPool: pg.Pool) {
-  return new PrismaClient({
-    adapter: new PrismaPg(nextPool),
-    log: ["error"],
-  });
-}
-
 export let pool = globalForDb.pool ?? createPool();
-export let prisma = globalForDb.prisma ?? createPrismaClient(pool);
 
 if (process.env['NODE_ENV'] !== "production") {
   globalForDb.pool = pool;
-  globalForDb.prisma = prisma;
 }
 
 export function isConnectionClosedError(error: unknown): boolean {
@@ -66,17 +54,13 @@ export function isConnectionClosedError(error: unknown): boolean {
 
 export async function resetDatabaseConnection() {
   const previousPool = pool;
-  const previousPrisma = prisma;
-
   pool = createPool();
-  prisma = createPrismaClient(pool);
 
   if (process.env['NODE_ENV'] !== "production") {
     globalForDb.pool = pool;
-    globalForDb.prisma = prisma;
   }
 
-  await Promise.allSettled([previousPrisma.$disconnect(), previousPool.end()]);
+  await Promise.allSettled([previousPool.end()]);
 }
 
 export async function rawQuery<T = any>(text: string, params?: any[]): Promise<T[]> {
@@ -90,3 +74,4 @@ export async function rawQuery<T = any>(text: string, params?: any[]): Promise<T
     return res.rows as T[];
   }
 }
+
