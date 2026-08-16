@@ -4,7 +4,7 @@ import { a as require_react, i as require_jsx_runtime } from "../_libs/react+tan
 import { A as isNotFound, C as resolveManifestAssetLink, D as isResolvedRedirect, E as isRedirect, M as invariant, O as parseRedirect, S as getStylesheetHref, T as executeRewriteInput, a as replaceSsrResponse, i as normalizeSsrResponse, k as rootRouteId, l as RouterProvider, n as defineHandlerCallback, o as stripSsrResponseBody, r as isSsrResponse, t as renderRouterToStream, w as resolveManifestCssLink, x as getScriptPreloadAttrs } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as createMemoryHistory } from "../_libs/tanstack__history.mjs";
 import { a as defaultSerovalPlugins, c as makeSerovalPlugin, d as toCrossJSONStream, i as getOrigin, l as fromJSON, n as attachRouterServerSsrUtils, o as createRawStreamRPCPlugin, r as getNormalizedURL, s as createSerializationAdapter, t as mergeHeaders, u as toCrossJSONAsync } from "../_libs/@tanstack/router-core+[...].mjs";
-import { n as createMiddleware } from "./server-BIu7Eo8J.mjs";
+import { n as createMiddleware } from "./server-BQhhcCvi.mjs";
 import { AsyncLocalStorage } from "node:async_hooks";
 require_react();
 var import_jsx_runtime = require_jsx_runtime();
@@ -91,7 +91,7 @@ var HEADERS = { TSS_SHELL: "X-TSS_SHELL" };
 * the dev styles URL for route-scoped CSS collection.
 */
 async function getStartManifest(matchedRoutes) {
-	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-Pw3dAE6n.mjs");
+	const { tsrStartManifest } = await import("../_tanstack-start-manifest_v-CgJ2S4DS.mjs");
 	const startManifest = tsrStartManifest();
 	let routes = startManifest.routes;
 	routes[rootRouteId];
@@ -113,67 +113,67 @@ async function getStartManifest(matchedRoutes) {
 var manifest = {
 	"124e9598f7eb9f46f60a0bef7992e29ccce1ca438b196ea2656b0a5e8dc695a4": {
 		functionName: "getBouquetFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"42c552a3b8faffc7bf59d009ae604647253a5bc4440973e56bf897501be8ae06": {
 		functionName: "togglePhotoVisibilityFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"6190028aa3799d02bf7a6fefd2ca9b0dbe773a039a8484fcc8fb7c73eba53927": {
 		functionName: "getPhotosFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"712505d01431c54a9d632fb715c7cb30535d9c143376877ca7b0a4f2d47d2b70": {
 		functionName: "updateSettingsFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"7d945d2e8051d8bf725fdcd656bd89e6d9ae554d31c779c0896d5e24c5fc11c6": {
 		functionName: "getLetterFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"85131eca85a5ee79aed48e380edb64a3fbcaf4f58ce42d97a3efca5991e0e7ba": {
 		functionName: "updateBouquetFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"924e9c6634c8c9e659f8d57974adf7628aed768773478ddc31e7adc29e00045a": {
 		functionName: "getGiftsFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"97260c6c951359d1a7321df09c4f54e3c3c46418f2063ac56261a2df371808cd": {
 		functionName: "deleteGiftFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"aabf8c6115cf0e726dc667f5829cc9efcec6fa874cd7b70d0570cc12ead2937b": {
 		functionName: "deleteCategoryFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"b83c1c8e0b4466d84b6773b028923ca27b96ffd6b96883fb98280328f267c9ec": {
 		functionName: "addCategoryFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"be90a202cdd22823190f509ad432d3cbd206a9e1b1f359e4aa9c2baf6fd028e9": {
 		functionName: "deletePhotoFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"d0fd8384f1033d6118a7a5f8e3e59e978e553930b663acc4a174e2c93fd36d62": {
 		functionName: "addGiftFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"d50394add6594a06edaf0f5a8f6903eb17b9f75c3da9693addef39eb3c2a9458": {
 		functionName: "getCategoriesFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"d7426526bba76288f370f0e476b1687df29c5f0631167f326a28b7e5f39f2784": {
 		functionName: "getSettingsFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"ef6840b4bed5621844eb802f1ca5ef785f269a947df03b9de13f5fcaaad7a5c6": {
 		functionName: "updateLetterFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	},
 	"fe0f9381554ee9f20fc58ddea0220ceb7d3495cec185c0830dd148d3811a360f": {
 		functionName: "addPhotoFn_createServerFn_handler",
-		importer: () => import("./server-functions-BmFEBEYI.mjs")
+		importer: () => import("./server-functions-DY2RN4pS.mjs")
 	}
 };
 async function getServerFnById(id, access) {
@@ -1417,7 +1417,7 @@ var getBaseManifest = getProdBaseManifest;
 var createEarlyHintsForRequest = createEarlyHintsCollector;
 async function loadEntries() {
 	const [routerEntry, startEntry, pluginAdapters] = await Promise.all([
-		import("./router-CFKyuQlZ.mjs").then((n) => n.t),
+		import("./router-pMJKEu9G.mjs").then((n) => n.t),
 		import("./start-BcSBlhe9.mjs"),
 		import("./empty-plugin-adapters-D9UWiqvJ.mjs")
 	]);

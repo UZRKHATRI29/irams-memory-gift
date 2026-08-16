@@ -1,4 +1,4 @@
-import { o as server_exports } from "./server-BIu7Eo8J2.mjs";
+import { o as server_exports } from "./server-BQhhcCvi2.mjs";
 //#region node_modules/.nitro/vite/services/ssr/assets/createMiddleware-B_4t7rW1.js
 var createMiddleware = (options, __opts) => {
 	const resolvedOptions = {

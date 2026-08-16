@@ -1,6 +1,6 @@
 import { t as useQuery } from "../_libs/react+tanstack__react-query.mjs";
-import { i as getServerFnById, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BIu7Eo8J2.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/media-5SGdgJaj.js
+import { i as getServerFnById, r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BQhhcCvi2.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/media-okdLHHoQ.js
 var createSsrRpc = (functionId) => {
 	const url = "/_serverFn/" + functionId;
 	const serverFnMeta = { id: functionId };
@@ -29,6 +29,140 @@ var updateLetterFn = createServerFn().validator((d) => d).handler(createSsrRpc("
 var updateBouquetFn = createServerFn().validator((d) => d).handler(createSsrRpc("85131eca85a5ee79aed48e380edb64a3fbcaf4f58ce42d97a3efca5991e0e7ba"));
 var addGiftFn = createServerFn().validator((d) => d).handler(createSsrRpc("d0fd8384f1033d6118a7a5f8e3e59e978e553930b663acc4a174e2c93fd36d62"));
 var deleteGiftFn = createServerFn().validator((d) => d).handler(createSsrRpc("97260c6c951359d1a7321df09c4f54e3c3c46418f2063ac56261a2df371808cd"));
+var DEFAULT_SETTINGS = {
+	id: "default",
+	recipient_name: "Iram",
+	signature: "Your sister",
+	opening_heading: "Hey Iram…",
+	opening_message: "I made you a little something for your birthday.",
+	opening_button_text: "Open your surprise",
+	album_intro: "A few memories I wanted to keep in one place. Don't judge the amount of photos.",
+	letter_title: "Read this first",
+	bouquet_message: "Every birthday deserves a little extra colour. ♡",
+	final_heading: "Happy Birthday, Iram ♡",
+	final_message: `Another year of you being you.
+
+I hope this year gives you a hundred little reasons to smile, lots of moments worth remembering, and everything you've been wishing for.
+
+I'm really lucky I get to call you my sister.`,
+	closing_message: "Now go enjoy your day — you've officially unlocked all your presents.",
+	birthday_date: null,
+	music_url: null,
+	music_enabled: false
+};
+var DEFAULT_LETTER = {
+	id: "default",
+	heading: "A little birthday note from me",
+	content: `Okay, before you open anything else…
+
+You know I had to make you something. I couldn't just send a text like a normal person.
+
+Thank you for every ridiculous conversation, every late night, and for putting up with me longer than anyone else has had to. I hope this year is soft and loud and everything you want it to be.
+
+Happy birthday, you.`,
+	signature: "Your sister",
+	letter_date: null
+};
+var DEFAULT_BOUQUET = {
+	id: "default",
+	title: "Flowers, obviously",
+	message: "Every birthday deserves a little extra colour. ♡",
+	description: "Picked entirely by me. No refunds.",
+	image_url: null,
+	visible: true
+};
+var DEFAULT_CATEGORIES = [
+	{
+		id: "cat-1",
+		name: "Us",
+		sort_order: 0
+	},
+	{
+		id: "cat-2",
+		name: "Childhood",
+		sort_order: 1
+	},
+	{
+		id: "cat-3",
+		name: "Family",
+		sort_order: 2
+	},
+	{
+		id: "cat-4",
+		name: "Random Memories",
+		sort_order: 3
+	},
+	{
+		id: "cat-5",
+		name: "Best Days",
+		sort_order: 4
+	}
+];
+var DEFAULT_PHOTOS = [
+	{
+		id: "photo-1",
+		image_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&auto=format&fit=crop&q=80",
+		caption: "Laughing until our stomachs hurt",
+		description: "One of those afternoons where nothing was funny but we couldn't stop laughing.",
+		category_id: "cat-1",
+		taken_on: null,
+		featured: true,
+		visible: true,
+		sort_order: 0
+	},
+	{
+		id: "photo-2",
+		image_url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80",
+		caption: "Best day out together",
+		description: "Golden hour memories and hot drinks on a crisp cold evening.",
+		category_id: "cat-5",
+		taken_on: null,
+		featured: false,
+		visible: true,
+		sort_order: 1
+	},
+	{
+		id: "photo-3",
+		image_url: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=800&auto=format&fit=crop&q=80",
+		caption: "Unfiltered smiles",
+		description: "No pose, just pure happiness caught on camera.",
+		category_id: "cat-4",
+		taken_on: null,
+		featured: false,
+		visible: true,
+		sort_order: 2
+	},
+	{
+		id: "photo-4",
+		image_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=80",
+		caption: "Shining bright",
+		description: "Always bringing light wherever you go.",
+		category_id: "cat-1",
+		taken_on: null,
+		featured: false,
+		visible: true,
+		sort_order: 3
+	}
+];
+var DEFAULT_GIFTS = [{
+	id: "gift-1",
+	name: "Personalized Charm Bracelet",
+	description: "A delicate silver chain engraved with our favorite sister memory.",
+	personal_message: "Something sweet to match your smile. ♡",
+	gift_date: null,
+	image_url: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop&q=80",
+	visible: true,
+	sort_order: 0
+}, {
+	id: "gift-2",
+	name: "A Day Together & Dessert",
+	description: "Voucher for coffee, sweet treats, and whatever store you want to walk into.",
+	personal_message: "My treat, no complaining allowed!",
+	gift_date: null,
+	image_url: "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?w=800&auto=format&fit=crop&q=80",
+	visible: true,
+	sort_order: 1
+}];
 var contentKeys = {
 	settings: ["site_settings"],
 	categories: ["album_categories"],
@@ -40,37 +174,82 @@ var contentKeys = {
 function useSettings() {
 	return useQuery({
 		queryKey: contentKeys.settings,
-		queryFn: () => getSettingsFn()
+		queryFn: async () => {
+			try {
+				return await getSettingsFn() || DEFAULT_SETTINGS;
+			} catch (e) {
+				console.warn("useSettings fallback:", e);
+				return DEFAULT_SETTINGS;
+			}
+		}
 	});
 }
 function useCategories() {
 	return useQuery({
 		queryKey: contentKeys.categories,
-		queryFn: () => getCategoriesFn()
+		queryFn: async () => {
+			try {
+				const res = await getCategoriesFn();
+				return res && res.length > 0 ? res : DEFAULT_CATEGORIES;
+			} catch (e) {
+				console.warn("useCategories fallback:", e);
+				return DEFAULT_CATEGORIES;
+			}
+		}
 	});
 }
 function usePhotos(opts) {
 	return useQuery({
 		queryKey: [...contentKeys.photos, opts?.includeHidden ?? false],
-		queryFn: () => getPhotosFn({ data: { includeHidden: opts?.includeHidden } })
+		queryFn: async () => {
+			try {
+				const res = await getPhotosFn({ data: { includeHidden: opts?.includeHidden } });
+				return res && res.length > 0 ? res : DEFAULT_PHOTOS;
+			} catch (e) {
+				console.warn("usePhotos fallback:", e);
+				return DEFAULT_PHOTOS;
+			}
+		}
 	});
 }
 function useLetter() {
 	return useQuery({
 		queryKey: contentKeys.letter,
-		queryFn: () => getLetterFn()
+		queryFn: async () => {
+			try {
+				return await getLetterFn() || DEFAULT_LETTER;
+			} catch (e) {
+				console.warn("useLetter fallback:", e);
+				return DEFAULT_LETTER;
+			}
+		}
 	});
 }
 function useBouquet() {
 	return useQuery({
 		queryKey: contentKeys.bouquet,
-		queryFn: () => getBouquetFn()
+		queryFn: async () => {
+			try {
+				return await getBouquetFn() || DEFAULT_BOUQUET;
+			} catch (e) {
+				console.warn("useBouquet fallback:", e);
+				return DEFAULT_BOUQUET;
+			}
+		}
 	});
 }
 function useGifts(opts) {
 	return useQuery({
 		queryKey: [...contentKeys.gifts, opts?.includeHidden ?? false],
-		queryFn: () => getGiftsFn({ data: { includeHidden: opts?.includeHidden } })
+		queryFn: async () => {
+			try {
+				const res = await getGiftsFn({ data: { includeHidden: opts?.includeHidden } });
+				return res && res.length > 0 ? res : DEFAULT_GIFTS;
+			} catch (e) {
+				console.warn("useGifts fallback:", e);
+				return DEFAULT_GIFTS;
+			}
+		}
 	});
 }
 /**

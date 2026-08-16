@@ -1,7 +1,7 @@
-import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BIu7Eo8J2.mjs";
+import { r as createServerFn, t as TSS_SERVER_FUNCTION } from "./server-BQhhcCvi2.mjs";
 import { n as esm_default, t as PrismaPgAdapterFactory } from "../_libs/@prisma/adapter-pg.mjs";
 import { PrismaClient } from "@prisma/client";
-//#region node_modules/.nitro/vite/services/ssr/assets/server-functions-BmFEBEYI.js
+//#region node_modules/.nitro/vite/services/ssr/assets/server-functions-DY2RN4pS.js
 var createServerRpc = (serverFnMeta, splitImportFn) => {
 	const url = "/_serverFn/" + serverFnMeta.id;
 	return Object.assign(splitImportFn, {
@@ -79,7 +79,11 @@ var getSettingsFn = createServerFn().handler(getSettingsFn_createServerFn_handle
 	} catch (e) {
 		await prepareFallback("getSettings", e);
 	}
-	return (await rawQuery("SELECT * FROM site_settings LIMIT 1"))[0] ?? null;
+	try {
+		return (await rawQuery("SELECT * FROM site_settings LIMIT 1"))[0] ?? null;
+	} catch (e) {
+		return null;
+	}
 });
 var getCategoriesFn_createServerFn_handler = createServerRpc({
 	id: "d50394add6594a06edaf0f5a8f6903eb17b9f75c3da9693addef39eb3c2a9458",
@@ -93,7 +97,11 @@ var getCategoriesFn = createServerFn().handler(getCategoriesFn_createServerFn_ha
 	} catch (e) {
 		await prepareFallback("getCategories", e);
 	}
-	return await rawQuery("SELECT * FROM album_categories ORDER BY sort_order ASC, created_at ASC");
+	try {
+		return await rawQuery("SELECT * FROM album_categories ORDER BY sort_order ASC, created_at ASC");
+	} catch (e) {
+		return [];
+	}
 });
 var getPhotosFn_createServerFn_handler = createServerRpc({
 	id: "6190028aa3799d02bf7a6fefd2ca9b0dbe773a039a8484fcc8fb7c73eba53927",
@@ -108,8 +116,12 @@ var getPhotosFn = createServerFn().validator((d) => d).handler(getPhotosFn_creat
 		});
 	} catch (e) {
 		await prepareFallback("getPhotos", e);
-		if (data?.includeHidden) return await rawQuery("SELECT * FROM photos ORDER BY sort_order ASC, created_at DESC");
-		return await rawQuery("SELECT * FROM photos WHERE visible = true ORDER BY sort_order ASC, created_at DESC");
+		try {
+			if (data?.includeHidden) return await rawQuery("SELECT * FROM photos ORDER BY sort_order ASC, created_at DESC");
+			return await rawQuery("SELECT * FROM photos WHERE visible = true ORDER BY sort_order ASC, created_at DESC");
+		} catch (err) {
+			return [];
+		}
 	}
 });
 var getLetterFn_createServerFn_handler = createServerRpc({
@@ -124,7 +136,11 @@ var getLetterFn = createServerFn().handler(getLetterFn_createServerFn_handler, a
 	} catch (e) {
 		await prepareFallback("getLetter", e);
 	}
-	return (await rawQuery("SELECT * FROM letter LIMIT 1"))[0] ?? null;
+	try {
+		return (await rawQuery("SELECT * FROM letter LIMIT 1"))[0] ?? null;
+	} catch (e) {
+		return null;
+	}
 });
 var getBouquetFn_createServerFn_handler = createServerRpc({
 	id: "124e9598f7eb9f46f60a0bef7992e29ccce1ca438b196ea2656b0a5e8dc695a4",
@@ -138,7 +154,11 @@ var getBouquetFn = createServerFn().handler(getBouquetFn_createServerFn_handler,
 	} catch (e) {
 		await prepareFallback("getBouquet", e);
 	}
-	return (await rawQuery("SELECT * FROM bouquet LIMIT 1"))[0] ?? null;
+	try {
+		return (await rawQuery("SELECT * FROM bouquet LIMIT 1"))[0] ?? null;
+	} catch (e) {
+		return null;
+	}
 });
 var getGiftsFn_createServerFn_handler = createServerRpc({
 	id: "924e9c6634c8c9e659f8d57974adf7628aed768773478ddc31e7adc29e00045a",
@@ -153,8 +173,12 @@ var getGiftsFn = createServerFn().validator((d) => d).handler(getGiftsFn_createS
 		});
 	} catch (e) {
 		await prepareFallback("getGifts", e);
-		if (data?.includeHidden) return await rawQuery("SELECT * FROM gifts ORDER BY sort_order ASC, created_at DESC");
-		return await rawQuery("SELECT * FROM gifts WHERE visible = true ORDER BY sort_order ASC, created_at DESC");
+		try {
+			if (data?.includeHidden) return await rawQuery("SELECT * FROM gifts ORDER BY sort_order ASC, created_at DESC");
+			return await rawQuery("SELECT * FROM gifts WHERE visible = true ORDER BY sort_order ASC, created_at DESC");
+		} catch (err) {
+			return [];
+		}
 	}
 });
 var updateSettingsFn_createServerFn_handler = createServerRpc({
@@ -184,28 +208,30 @@ var updateSettingsFn = createServerFn().validator((d) => d).handler(updateSettin
 		return { success: true };
 	} catch (e) {
 		await prepareFallback("updateSettings", e);
-		const existing = await rawQuery("SELECT id FROM site_settings LIMIT 1");
-		if (existing.length > 0) await rawQuery(`UPDATE site_settings SET recipient_name = $1, signature = $2, opening_heading = $3, opening_message = $4, opening_button_text = $5, final_heading = $6, final_message = $7, closing_message = $8, updated_at = NOW() WHERE id = $9`, [
-			data.recipient_name || "Iram",
-			data.signature || "Your sister",
-			data.opening_heading || "",
-			data.opening_message || "",
-			data.opening_button_text || "",
-			data.final_heading || "",
-			data.final_message || "",
-			data.closing_message || "",
-			existing[0].id
-		]);
-		else await rawQuery(`INSERT INTO site_settings (recipient_name, signature, opening_heading, opening_message, opening_button_text, final_heading, final_message, closing_message) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [
-			data.recipient_name || "Iram",
-			data.signature || "Your sister",
-			data.opening_heading || "",
-			data.opening_message || "",
-			data.opening_button_text || "",
-			data.final_heading || "",
-			data.final_message || "",
-			data.closing_message || ""
-		]);
+		try {
+			const existing = await rawQuery("SELECT id FROM site_settings LIMIT 1");
+			if (existing.length > 0) await rawQuery(`UPDATE site_settings SET recipient_name = $1, signature = $2, opening_heading = $3, opening_message = $4, opening_button_text = $5, final_heading = $6, final_message = $7, closing_message = $8, updated_at = NOW() WHERE id = $9`, [
+				data.recipient_name || "Iram",
+				data.signature || "Your sister",
+				data.opening_heading || "",
+				data.opening_message || "",
+				data.opening_button_text || "",
+				data.final_heading || "",
+				data.final_message || "",
+				data.closing_message || "",
+				existing[0].id
+			]);
+			else await rawQuery(`INSERT INTO site_settings (recipient_name, signature, opening_heading, opening_message, opening_button_text, final_heading, final_message, closing_message) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [
+				data.recipient_name || "Iram",
+				data.signature || "Your sister",
+				data.opening_heading || "",
+				data.opening_message || "",
+				data.opening_button_text || "",
+				data.final_heading || "",
+				data.final_message || "",
+				data.closing_message || ""
+			]);
+		} catch (err) {}
 		return { success: true };
 	}
 });
@@ -222,7 +248,9 @@ var addCategoryFn = createServerFn().validator((d) => d).handler(addCategoryFn_c
 		} });
 	} catch (e) {
 		await prepareFallback("addCategory", e);
-		await rawQuery("INSERT INTO album_categories (name, sort_order) VALUES ($1, $2)", [data.name, data.sort_order]);
+		try {
+			await rawQuery("INSERT INTO album_categories (name, sort_order) VALUES ($1, $2)", [data.name, data.sort_order]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -236,7 +264,9 @@ var deleteCategoryFn = createServerFn().validator((d) => d).handler(deleteCatego
 		await prisma.category.delete({ where: { id: data.id } });
 	} catch (e) {
 		await prepareFallback("deleteCategory", e);
-		await rawQuery("DELETE FROM album_categories WHERE id = $1", [data.id]);
+		try {
+			await rawQuery("DELETE FROM album_categories WHERE id = $1", [data.id]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -257,14 +287,16 @@ var addPhotoFn = createServerFn().validator((d) => d).handler(addPhotoFn_createS
 		} });
 	} catch (e) {
 		await prepareFallback("addPhoto", e);
-		await rawQuery(`INSERT INTO photos (image_url, caption, description, category_id, taken_on, visible, sort_order) VALUES ($1, $2, $3, $4, $5, true, $6)`, [
-			data.image_url,
-			data.caption || null,
-			data.description || null,
-			data.category_id || null,
-			data.taken_on || null,
-			data.sort_order
-		]);
+		try {
+			await rawQuery(`INSERT INTO photos (image_url, caption, description, category_id, taken_on, visible, sort_order) VALUES ($1, $2, $3, $4, $5, true, $6)`, [
+				data.image_url,
+				data.caption || null,
+				data.description || null,
+				data.category_id || null,
+				data.taken_on || null,
+				data.sort_order
+			]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -281,7 +313,9 @@ var togglePhotoVisibilityFn = createServerFn().validator((d) => d).handler(toggl
 		});
 	} catch (e) {
 		await prepareFallback("togglePhotoVisibility", e);
-		await rawQuery("UPDATE photos SET visible = $1 WHERE id = $2", [data.visible, data.id]);
+		try {
+			await rawQuery("UPDATE photos SET visible = $1 WHERE id = $2", [data.visible, data.id]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -295,7 +329,9 @@ var deletePhotoFn = createServerFn().validator((d) => d).handler(deletePhotoFn_c
 		await prisma.photo.delete({ where: { id: data.id } });
 	} catch (e) {
 		await prepareFallback("deletePhoto", e);
-		await rawQuery("DELETE FROM photos WHERE id = $1", [data.id]);
+		try {
+			await rawQuery("DELETE FROM photos WHERE id = $1", [data.id]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -320,18 +356,20 @@ var updateLetterFn = createServerFn().validator((d) => d).handler(updateLetterFn
 		else await prisma.letter.create({ data: payload });
 	} catch (e) {
 		await prepareFallback("updateLetter", e);
-		const existing = await rawQuery("SELECT id FROM letter LIMIT 1");
-		if (existing.length > 0) await rawQuery(`UPDATE letter SET heading = $1, content = $2, signature = $3, updated_at = NOW() WHERE id = $4`, [
-			data.heading || "",
-			data.content || "",
-			data.signature || "",
-			existing[0].id
-		]);
-		else await rawQuery(`INSERT INTO letter (heading, content, signature) VALUES ($1, $2, $3)`, [
-			data.heading || "",
-			data.content || "",
-			data.signature || ""
-		]);
+		try {
+			const existing = await rawQuery("SELECT id FROM letter LIMIT 1");
+			if (existing.length > 0) await rawQuery(`UPDATE letter SET heading = $1, content = $2, signature = $3, updated_at = NOW() WHERE id = $4`, [
+				data.heading || "",
+				data.content || "",
+				data.signature || "",
+				existing[0].id
+			]);
+			else await rawQuery(`INSERT INTO letter (heading, content, signature) VALUES ($1, $2, $3)`, [
+				data.heading || "",
+				data.content || "",
+				data.signature || ""
+			]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -356,18 +394,20 @@ var updateBouquetFn = createServerFn().validator((d) => d).handler(updateBouquet
 		else await prisma.bouquet.create({ data: payload });
 	} catch (e) {
 		await prepareFallback("updateBouquet", e);
-		const existing = await rawQuery("SELECT id FROM bouquet LIMIT 1");
-		if (existing.length > 0) await rawQuery(`UPDATE bouquet SET title = $1, message = $2, image_url = $3, updated_at = NOW() WHERE id = $4`, [
-			data.title || "",
-			data.message || "",
-			data.image_url || null,
-			existing[0].id
-		]);
-		else await rawQuery(`INSERT INTO bouquet (title, message, image_url) VALUES ($1, $2, $3)`, [
-			data.title || "",
-			data.message || "",
-			data.image_url || null
-		]);
+		try {
+			const existing = await rawQuery("SELECT id FROM bouquet LIMIT 1");
+			if (existing.length > 0) await rawQuery(`UPDATE bouquet SET title = $1, message = $2, image_url = $3, updated_at = NOW() WHERE id = $4`, [
+				data.title || "",
+				data.message || "",
+				data.image_url || null,
+				existing[0].id
+			]);
+			else await rawQuery(`INSERT INTO bouquet (title, message, image_url) VALUES ($1, $2, $3)`, [
+				data.title || "",
+				data.message || "",
+				data.image_url || null
+			]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -388,13 +428,15 @@ var addGiftFn = createServerFn().validator((d) => d).handler(addGiftFn_createSer
 		} });
 	} catch (e) {
 		await prepareFallback("addGift", e);
-		await rawQuery(`INSERT INTO gifts (name, description, personal_message, image_url, visible, sort_order) VALUES ($1, $2, $3, $4, true, $5)`, [
-			data.name,
-			data.description || null,
-			data.personal_message || null,
-			data.image_url || null,
-			data.sort_order
-		]);
+		try {
+			await rawQuery(`INSERT INTO gifts (name, description, personal_message, image_url, visible, sort_order) VALUES ($1, $2, $3, $4, true, $5)`, [
+				data.name,
+				data.description || null,
+				data.personal_message || null,
+				data.image_url || null,
+				data.sort_order
+			]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
@@ -408,7 +450,9 @@ var deleteGiftFn = createServerFn().validator((d) => d).handler(deleteGiftFn_cre
 		await prisma.gift.delete({ where: { id: data.id } });
 	} catch (e) {
 		await prepareFallback("deleteGift", e);
-		await rawQuery("DELETE FROM gifts WHERE id = $1", [data.id]);
+		try {
+			await rawQuery("DELETE FROM gifts WHERE id = $1", [data.id]);
+		} catch (err) {}
 	}
 	return { success: true };
 });
