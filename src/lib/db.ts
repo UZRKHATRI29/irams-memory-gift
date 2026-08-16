@@ -54,7 +54,7 @@ export function isConnectionClosedError(error: unknown): boolean {
   const record = error as Record<string, unknown>;
   if (record['code'] === "P1017") return true;
 
-  const message = typeof record['message'] === "string" ? record.message : "";
+  const message = typeof record['message'] === "string" ? (record["message"] as string) : "";
   if (/server has closed the connection|connectionclosed|connection closed/i.test(message)) {
     return true;
   }
