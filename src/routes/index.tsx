@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { useSettings } from "@/lib/content";
 import { Atmosphere } from "@/components/decor/Atmosphere";
@@ -11,7 +10,6 @@ import { LetterScene } from "@/components/gift/LetterScene";
 import { BouquetScene } from "@/components/gift/BouquetScene";
 import { GiftsScene } from "@/components/gift/GiftsScene";
 import { FinalScene } from "@/components/gift/FinalScene";
-import { Volume2, VolumeX, Shield } from "lucide-react";
 
 type Stage = "opening" | "box" | "album" | "letter" | "bouquet" | "gifts" | "final";
 
@@ -44,18 +42,6 @@ export default function IndexPage() {
     <main className="relative min-h-[100svh] w-full overflow-hidden bg-background font-sans text-foreground paper grain">
       {/* Background Atmosphere - floating falling petals */}
       <Atmosphere />
-
-      {/* Admin Quick Portal Access Link */}
-      <div className="fixed right-3 top-3 z-40 sm:right-6 sm:top-6">
-        <Link
-          to="/admin"
-          className="flex items-center gap-1.5 rounded-full border border-walnut/20 bg-cream/70 px-3 py-1.5 text-xs text-walnut shadow-xs backdrop-blur-sm transition-colors hover:bg-beige"
-          title="Admin Panel"
-        >
-          <Shield className="h-3.5 w-3.5" />
-          <span>Admin</span>
-        </Link>
-      </div>
 
       <AnimatePresence mode="wait">
         {/* Stage 1: Opening Screen */}
