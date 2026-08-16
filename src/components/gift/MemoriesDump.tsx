@@ -64,7 +64,7 @@ export function MemoriesDump({
   const getUrl = useMediaUrls(photoPaths);
 
   return (
-    <div className="relative my-6 rounded-3xl border-4 border-[#2A180E] p-6 sm:p-10 shadow-2xl overflow-hidden"
+    <div className="relative my-4 rounded-2xl sm:rounded-3xl border-3 sm:border-4 border-[#2A180E] p-3 sm:p-10 shadow-2xl overflow-hidden"
       style={{
         background: `
           linear-gradient(180deg, rgba(36,21,10,0.85) 0%, rgba(24,13,6,0.92) 100%),
@@ -75,17 +75,17 @@ export function MemoriesDump({
       }}
     >
       {/* Wood Surface Header */}
-      <div className="text-center mb-10">
-        <h3 className="hand text-4xl text-cream font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+      <div className="text-center mb-6 sm:mb-10">
+        <h3 className="hand text-3xl sm:text-4xl text-cream font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
           📸 The Memories Dump
         </h3>
-        <p className="text-sm font-sans tracking-widest text-gold/90 uppercase mt-1">
+        <p className="text-[11px] sm:text-sm font-sans tracking-widest text-gold/90 uppercase mt-1">
           every polaroid taped with love
         </p>
       </div>
 
-      {/* Grid of Taped Polaroids (Matching Reference Image Exactly) */}
-      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 pb-20">
+      {/* Grid of Taped Polaroids */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-3 lg:grid-cols-4 pb-12 sm:pb-20">
         {photos.map((photo, index) => {
           const signedUrl = getUrl(photo.image_url);
           // Alternate rotation angles for realistic taped board layout
@@ -105,11 +105,12 @@ export function MemoriesDump({
                 zIndex: 30,
                 transition: { duration: 0.2 },
               }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => onSelectPhoto(photo, index)}
-              className="group relative cursor-pointer rounded-sm border-[10px] border-cream bg-cream p-1 shadow-[0_12px_25px_rgba(0,0,0,0.6)] transition-all duration-300 hover:shadow-[0_25px_40px_rgba(0,0,0,0.8)]"
+              className="group relative cursor-pointer rounded-sm border-4 sm:border-[10px] border-cream bg-cream p-1 shadow-[0_12px_25px_rgba(0,0,0,0.6)] transition-all duration-300 hover:shadow-[0_25px_40px_rgba(0,0,0,0.8)] select-none"
             >
               {/* Masking Tape on Top Center */}
-              <MaskingTape className="-top-4 left-1/2 -translate-x-1/2 rotate-[-2deg] group-hover:rotate-0 transition-transform" />
+              <MaskingTape className="-top-3 sm:-top-4 left-1/2 -translate-x-1/2 rotate-[-2deg] group-hover:rotate-0 transition-transform scale-75 sm:scale-100" />
 
               {/* Polaroid Image Frame */}
               <div className="relative aspect-square w-full overflow-hidden bg-black/20 rounded-xs">

@@ -62,62 +62,62 @@ export function AlbumScene() {
       </div>
 
       {/* View Mode Switcher Tabs */}
-      <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+      <div className="mt-6 flex flex-wrap justify-center gap-2 sm:mt-8 sm:gap-2.5">
         <button
           onClick={() => setViewMode("dump")}
-          className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
             viewMode === "dump"
               ? "border border-gold/40 bg-cocoa text-cream shadow-md scale-105"
               : "border border-walnut/20 bg-cream/70 text-walnut hover:bg-beige/80"
           }`}
         >
-          <Camera className="h-4 w-4 text-gold" />
-          <span className="hand text-lg font-semibold">📸 Taped Memories Dump</span>
+          <Camera className="h-3.5 w-3.5 text-gold sm:h-4 sm:w-4" />
+          <span className="hand text-base sm:text-lg font-semibold">📸 Taped Memories Dump</span>
         </button>
 
         <button
           onClick={() => setViewMode("deck")}
-          className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
             viewMode === "deck"
               ? "border border-gold/40 bg-cocoa text-cream shadow-md scale-105"
               : "border border-walnut/20 bg-cream/70 text-walnut hover:bg-beige/80"
           }`}
         >
-          <Layers className="h-4 w-4 text-gold" />
-          <span className="hand text-lg">Polaroid Fan Deck</span>
+          <Layers className="h-3.5 w-3.5 text-gold sm:h-4 sm:w-4" />
+          <span className="hand text-base sm:text-lg">Polaroid Fan Deck</span>
         </button>
 
         <button
           onClick={() => setViewMode("roadmap")}
-          className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
             viewMode === "roadmap"
               ? "border border-gold/40 bg-cocoa text-cream shadow-md scale-105"
               : "border border-walnut/20 bg-cream/70 text-walnut hover:bg-beige/80"
           }`}
         >
-          <Compass className="h-4 w-4 text-gold" />
-          <span className="hand text-lg">Memory Roadmap</span>
+          <Compass className="h-3.5 w-3.5 text-gold sm:h-4 sm:w-4" />
+          <span className="hand text-base sm:text-lg">Memory Roadmap</span>
         </button>
 
         <button
           onClick={() => setViewMode("grid")}
-          className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+          className={`flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs sm:px-5 sm:py-2 sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
             viewMode === "grid"
               ? "border border-gold/40 bg-cocoa text-cream shadow-md scale-105"
               : "border border-walnut/20 bg-cream/70 text-walnut hover:bg-beige/80"
           }`}
         >
-          <Grid className="h-4 w-4 text-gold" />
-          <span className="hand text-lg">All Grid</span>
+          <Grid className="h-3.5 w-3.5 text-gold sm:h-4 sm:w-4" />
+          <span className="hand text-base sm:text-lg">All Grid</span>
         </button>
       </div>
 
       {/* Category Pills (Visible in Grid View) */}
       {viewMode === "grid" && categories.length > 0 && (
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5 sm:mt-6 sm:gap-2">
           <button
             onClick={() => setActiveCategoryId(null)}
-            className={`rounded-full px-4 py-1 text-xs transition-colors ${
+            className={`rounded-full px-3 py-1 text-xs transition-colors cursor-pointer ${
               activeCategoryId === null
                 ? "bg-cocoa text-cream"
                 : "bg-cream/70 text-walnut border border-walnut/20 hover:bg-beige"
@@ -131,7 +131,7 @@ export function AlbumScene() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategoryId(cat.id)}
-                className={`rounded-full px-4 py-1 text-xs transition-colors ${
+                className={`rounded-full px-3 py-1 text-xs transition-colors cursor-pointer ${
                   activeCategoryId === cat.id
                     ? "bg-cocoa text-cream"
                     : "bg-cream/70 text-walnut border border-walnut/20 hover:bg-beige"
@@ -156,16 +156,16 @@ export function AlbumScene() {
         </div>
       ) : photos.length === 0 ? (
         /* Empty State */
-        <div className="mt-12 text-center rounded-2xl border border-walnut/15 bg-card/60 p-10 paper shadow-paper">
-          <LeafBranch className="mx-auto h-12 w-12 text-taupe/60" />
-          <h3 className="mt-4 text-2xl text-cocoa">Our Memories Dump Begins Here</h3>
-          <p className="hand mt-2 text-xl text-walnut/70">
+        <div className="mt-12 text-center rounded-2xl border border-walnut/15 bg-card/60 p-6 sm:p-10 paper shadow-paper">
+          <LeafBranch className="mx-auto h-10 w-10 text-taupe/60 sm:h-12 sm:w-12" />
+          <h3 className="mt-4 text-xl sm:text-2xl text-cocoa">Our Memories Dump Begins Here</h3>
+          <p className="hand mt-2 text-lg sm:text-xl text-walnut/70">
             Upload your photos from the admin panel to populate this taped polaroid dump!
           </p>
         </div>
       ) : (
         <div>
-          {/* MODE 1: Taped Memories Dump (Matching New Reference Image Exactly) */}
+          {/* MODE 1: Taped Memories Dump */}
           {viewMode === "dump" && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -205,7 +205,7 @@ export function AlbumScene() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="relative mt-12 space-y-12 before:absolute before:left-1/2 before:top-4 before:bottom-4 before:w-0.5 before:-translate-x-1/2 before:bg-gradient-to-b before:from-gold/40 before:via-walnut/20 before:to-rose/40"
+              className="relative mt-8 space-y-6 sm:mt-12 sm:space-y-12 sm:before:absolute sm:before:left-1/2 sm:before:top-4 sm:before:bottom-4 sm:before:w-0.5 sm:before:-translate-x-1/2 sm:before:bg-gradient-to-b sm:before:from-gold/40 sm:before:via-walnut/20 sm:before:to-rose/40"
             >
               {photos.map((photo, index) => {
                 const isEven = index % 2 === 0;
@@ -214,17 +214,17 @@ export function AlbumScene() {
                 return (
                   <motion.div
                     key={photo.id}
-                    initial={{ opacity: 0, x: isEven ? -30 : 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.6 }}
-                    className={`relative flex items-center justify-between gap-8 ${
-                      isEven ? "flex-row" : "flex-row-reverse"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.08, duration: 0.5 }}
+                    className={`relative flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-8 ${
+                      isEven ? "sm:flex-row" : "sm:flex-row-reverse"
                     }`}
                   >
-                    <div className="w-[calc(50%-2rem)]">
+                    <div className="w-full sm:w-[calc(50%-2rem)]">
                       <div
                         onClick={() => setSelectedPhotoIndex(index)}
-                        className="group relative cursor-pointer rounded-2xl border border-walnut/20 bg-cream p-4 shadow-paper transition-all duration-300 hover:-translate-y-1 hover:shadow-lift paper"
+                        className="group relative cursor-pointer rounded-2xl border border-walnut/20 bg-cream p-3.5 sm:p-4 shadow-paper transition-all duration-300 hover:-translate-y-1 hover:shadow-lift paper"
                       >
                         <div className="aspect-video w-full overflow-hidden rounded-lg bg-cocoa/5">
                           {signedUrl ? (
@@ -241,14 +241,14 @@ export function AlbumScene() {
                         </div>
 
                         <div className="mt-3">
-                          <p className="hand text-2xl text-cocoa">{photo.caption || "Milestone"}</p>
+                          <p className="hand text-xl sm:text-2xl text-cocoa">{photo.caption || "Milestone"}</p>
                           {photo.description && (
-                            <p className="mt-1 text-sm text-walnut/80 line-clamp-2">
+                            <p className="mt-1 text-xs sm:text-sm text-walnut/80 line-clamp-2">
                               {photo.description}
                             </p>
                           )}
                           {photo.taken_on && (
-                            <p className="mt-2 text-xs font-sans tracking-wider text-walnut/60 uppercase flex items-center gap-1">
+                            <p className="mt-2 text-[11px] sm:text-xs font-sans tracking-wider text-walnut/60 uppercase flex items-center gap-1">
                               <Calendar className="h-3 w-3" />
                               {new Date(photo.taken_on).toLocaleDateString("en-US", {
                                 month: "long",
@@ -260,7 +260,7 @@ export function AlbumScene() {
                       </div>
                     </div>
 
-                    <div className="absolute left-1/2 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-cream bg-cocoa text-cream shadow-md">
+                    <div className="hidden sm:flex absolute left-1/2 h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border-2 border-cream bg-cocoa text-cream shadow-md">
                       <MapPin className="h-4 w-4 text-gold" />
                     </div>
 
