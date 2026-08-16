@@ -1,6 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
-import { prisma, rawQuery } from "./db";
+import { isConnectionClosedError, prisma, rawQuery, resetDatabaseConnection } from "./db";
 import type { SiteSettings, Category, Photo, Letter, Bouquet, Gift } from "./content";
+
+async function prepareFallback(operation: string, error: unknown) {
+  if (isConnectionClosedError(error)) {
+    await resetDatabaseConnection();
+    return;
+  }
+
+  console.warn(`Prisma ${operation} fallback:`, error);
+}
 
 // --- GETTERS ---
 export const getSettingsFn = createServerFn().handler(async () => {
@@ -8,7 +17,7 @@ export const getSettingsFn = createServerFn().handler(async () => {
     const row = await prisma.siteSettings.findFirst();
     if (row) return row as unknown as SiteSettings;
   } catch (e) {
-    console.warn("Prisma getSettings fallback:", e);
+    await prepareFallback("getSettings", e);
   }
   const rows = await rawQuery<SiteSettings>("SELECT * FROM site_settings LIMIT 1");
   return rows[0] ?? null;
@@ -21,7 +30,7 @@ export const getCategoriesFn = createServerFn().handler(async () => {
     });
     if (rows && rows.length > 0) return rows as unknown as Category[];
   } catch (e) {
-    console.warn("Prisma getCategories fallback:", e);
+    await prepareFallback("getCategories", e);
   }
   return await rawQuery<Category>("SELECT * FROM album_categories ORDER BY sort_order ASC, created_at ASC");
 });
@@ -36,7 +45,7 @@ export const getPhotosFn = createServerFn()
       });
       return rows as unknown as Photo[];
     } catch (e) {
-      console.warn("Prisma getPhotos fallback:", e);
+      await prepareFallback("getPhotos", e);
       if (data?.includeHidden) {
         return await rawQuery<Photo>("SELECT * FROM photos ORDER BY sort_order ASC, created_at DESC");
       }
@@ -49,7 +58,7 @@ export const getLetterFn = createServerFn().handler(async () => {
     const row = await prisma.letter.findFirst();
     if (row) return row as unknown as Letter;
   } catch (e) {
-    console.warn("Prisma getLetter fallback:", e);
+    await prepareFallback("getLetter", e);
   }
   const rows = await rawQuery<Letter>("SELECT * FROM letter LIMIT 1");
   return rows[0] ?? null;
@@ -60,7 +69,7 @@ export const getBouquetFn = createServerFn().handler(async () => {
     const row = await prisma.bouquet.findFirst();
     if (row) return row as unknown as Bouquet;
   } catch (e) {
-    console.warn("Prisma getBouquet fallback:", e);
+    await prepareFallback("getBouquet", e);
   }
   const rows = await rawQuery<Bouquet>("SELECT * FROM bouquet LIMIT 1");
   return rows[0] ?? null;
@@ -76,7 +85,7 @@ export const getGiftsFn = createServerFn()
       });
       return rows as unknown as Gift[];
     } catch (e) {
-      console.warn("Prisma getGifts fallback:", e);
+      await prepareFallback("getGifts", e);
       if (data?.includeHidden) {
         return await rawQuery<Gift>("SELECT * FROM gifts ORDER BY sort_order ASC, created_at DESC");
       }
@@ -114,7 +123,7 @@ export const updateSettingsFn = createServerFn()
       }
       return { success: true };
     } catch (e) {
-      console.warn("Prisma updateSettings fallback:", e);
+      await prepareFallback("updateSettings", e);
       const existing = await rawQuery("SELECT id FROM site_settings LIMIT 1");
       if (existing.length > 0) {
         await rawQuery(
@@ -161,6 +170,7 @@ export const addCategoryFn = createServerFn()
         },
       });
     } catch (e) {
+      await prepareFallback("addCategory", e);
       await rawQuery("INSERT INTO album_categories (name, sort_order) VALUES ($1, $2)", [data.name, data.sort_order]);
     }
     return { success: true };
@@ -174,6 +184,7 @@ export const deleteCategoryFn = createServerFn()
         where: { id: data.id },
       });
     } catch (e) {
+      await prepareFallback("deleteCategory", e);
       await rawQuery("DELETE FROM album_categories WHERE id = $1", [data.id]);
     }
     return { success: true };
@@ -203,6 +214,7 @@ export const addPhotoFn = createServerFn()
         },
       });
     } catch (e) {
+      await prepareFallback("addPhoto", e);
       await rawQuery(
         `INSERT INTO photos (image_url, caption, description, category_id, taken_on, visible, sort_order) VALUES ($1, $2, $3, $4, $5, true, $6)`,
         [
@@ -227,6 +239,7 @@ export const togglePhotoVisibilityFn = createServerFn()
         data: { visible: data.visible },
       });
     } catch (e) {
+      await prepareFallback("togglePhotoVisibility", e);
       await rawQuery("UPDATE photos SET visible = $1 WHERE id = $2", [data.visible, data.id]);
     }
     return { success: true };
@@ -240,6 +253,7 @@ export const deletePhotoFn = createServerFn()
         where: { id: data.id },
       });
     } catch (e) {
+      await prepareFallback("deletePhoto", e);
       await rawQuery("DELETE FROM photos WHERE id = $1", [data.id]);
     }
     return { success: true };
@@ -268,6 +282,7 @@ export const updateLetterFn = createServerFn()
         });
       }
     } catch (e) {
+      await prepareFallback("updateLetter", e);
       const existing = await rawQuery("SELECT id FROM letter LIMIT 1");
       if (existing.length > 0) {
         await rawQuery(
@@ -308,6 +323,7 @@ export const updateBouquetFn = createServerFn()
         });
       }
     } catch (e) {
+      await prepareFallback("updateBouquet", e);
       const existing = await rawQuery("SELECT id FROM bouquet LIMIT 1");
       if (existing.length > 0) {
         await rawQuery(
@@ -348,6 +364,7 @@ export const addGiftFn = createServerFn()
         },
       });
     } catch (e) {
+      await prepareFallback("addGift", e);
       await rawQuery(
         `INSERT INTO gifts (name, description, personal_message, image_url, visible, sort_order) VALUES ($1, $2, $3, $4, true, $5)`,
         [data.name, data.description || null, data.personal_message || null, data.image_url || null, data.sort_order]
@@ -364,6 +381,7 @@ export const deleteGiftFn = createServerFn()
         where: { id: data.id },
       });
     } catch (e) {
+      await prepareFallback("deleteGift", e);
       await rawQuery("DELETE FROM gifts WHERE id = $1", [data.id]);
     }
     return { success: true };
