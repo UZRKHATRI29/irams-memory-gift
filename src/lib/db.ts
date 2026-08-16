@@ -6,7 +6,7 @@ const connectionString =
   process.env.DATABASE_URL ||
   (import.meta as any).env?.VITE_DATABASE_URL ||
   (import.meta as any).env?.DATABASE_URL ||
-  "postgresql://neondb_owner:npg_1hjqg6SsFidO@ep-lucky-grass-ay99wkdm-pooler.c-5.us-east-2.aws.neon.tech/neondb?sslmode=verify-full";
+  "postgresql://neondb_owner:npg_1hjqg6SsFidO@ep-lucky-grass-ay99wkdm-pooler.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
 
 type DbGlobals = {
   pool?: pg.Pool;
