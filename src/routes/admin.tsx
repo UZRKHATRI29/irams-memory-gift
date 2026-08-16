@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   useSettings,
@@ -48,19 +48,9 @@ import {
   Sparkles,
 } from "lucide-react";
 
-export const Route = createFileRoute("/admin")({
-  head: () => ({
-    meta: [
-      { name: "robots", content: "noindex, nofollow" },
-      { title: "Admin Panel | Iram's Memory Gift" },
-    ],
-  }),
-  component: AdminPage,
-});
-
 type Tab = "settings" | "photos" | "letter" | "bouquet" | "gifts";
 
-function AdminPage() {
+export default function AdminPage() {
   const [session, setSession] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("settings");

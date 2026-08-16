@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { useSettings } from "@/lib/content";
 import { Atmosphere } from "@/components/decor/Atmosphere";
@@ -13,13 +13,9 @@ import { GiftsScene } from "@/components/gift/GiftsScene";
 import { FinalScene } from "@/components/gift/FinalScene";
 import { Volume2, VolumeX, Shield } from "lucide-react";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
 type Stage = "opening" | "box" | "album" | "letter" | "bouquet" | "gifts" | "final";
 
-function Index() {
+export default function IndexPage() {
   const { data: settings } = useSettings();
   const [stage, setStage] = useState<Stage>("opening");
   const [boxOpened, setBoxOpened] = useState(false);
@@ -51,14 +47,14 @@ function Index() {
 
       {/* Admin Quick Portal Access Link */}
       <div className="fixed right-3 top-3 z-40 sm:right-6 sm:top-6">
-        <a
-          href="/admin"
+        <Link
+          to="/admin"
           className="flex items-center gap-1.5 rounded-full border border-walnut/20 bg-cream/70 px-3 py-1.5 text-xs text-walnut shadow-xs backdrop-blur-sm transition-colors hover:bg-beige"
           title="Admin Panel"
         >
           <Shield className="h-3.5 w-3.5" />
           <span>Admin</span>
-        </a>
+        </Link>
       </div>
 
       <AnimatePresence mode="wait">
