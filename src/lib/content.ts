@@ -239,7 +239,7 @@ export function usePhotos(opts?: { includeHidden?: boolean }) {
     queryKey: [...contentKeys.photos, opts?.includeHidden ?? false],
     queryFn: async () => {
       try {
-        const res = await getPhotosFn({ data: { includeHidden: opts?.includeHidden } });
+        const res = await getPhotosFn({ data: { includeHidden: opts?.includeHidden ?? false } });
         return res && res.length > 0 ? res : DEFAULT_PHOTOS;
       } catch (e) {
         console.warn("usePhotos fallback:", e);
@@ -284,7 +284,7 @@ export function useGifts(opts?: { includeHidden?: boolean }) {
     queryKey: [...contentKeys.gifts, opts?.includeHidden ?? false],
     queryFn: async () => {
       try {
-        const res = await getGiftsFn({ data: { includeHidden: opts?.includeHidden } });
+        const res = await getGiftsFn({ data: { includeHidden: opts?.includeHidden ?? false } });
         return res && res.length > 0 ? res : DEFAULT_GIFTS;
       } catch (e) {
         console.warn("useGifts fallback:", e);
