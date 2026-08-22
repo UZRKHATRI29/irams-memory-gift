@@ -60,8 +60,14 @@ export function MemoriesDump({
   photos: Photo[];
   onSelectPhoto: (photo: Photo, index: number) => void;
 }) {
+  const [unwrappedIds, setUnwrappedIds] = useState<Record<string, boolean>>({});
   const photoPaths = photos.map((p) => p.image_url);
   const getUrl = useMediaUrls(photoPaths);
+
+  const handlePhotoClick = (photo: Photo, index: number) => {
+    setUnwrappedIds((prev) => ({ ...prev, [photo.id || String(index)]: true }));
+    onSelectPhoto(photo, index);
+  };
 
   return (
     <div className="relative my-4 rounded-2xl sm:rounded-3xl border-3 sm:border-4 border-[#2A180E] p-3 sm:p-10 shadow-2xl overflow-hidden"
@@ -80,13 +86,15 @@ export function MemoriesDump({
           📸 The Memories Dump
         </h3>
         <p className="text-[11px] sm:text-sm font-sans tracking-widest text-gold/90 uppercase mt-1">
-          every polaroid taped with love
+          tap any memory package to unwrap it like a gift 🎁
         </p>
       </div>
 
       {/* Grid of Taped Polaroids */}
       <div className="grid grid-cols-2 gap-3 sm:gap-6 sm:grid-cols-3 lg:grid-cols-4 pb-12 sm:pb-20">
         {photos.map((photo, index) => {
+          const photoId = photo.id || String(index);
+          const isUnwrapped = !!unwrappedIds[photoId];
           const signedUrl = getUrl(photo.image_url);
           // Alternate rotation angles for realistic taped board layout
           const rotations = [-3.5, 2.5, -2, 3, -1.5, 4, -2.8, 1.8];
@@ -94,7 +102,7 @@ export function MemoriesDump({
 
           return (
             <motion.div
-              key={photo.id || index}
+              key={photoId}
               initial={{ opacity: 0, scale: 0.85, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: index * 0.05, duration: 0.5 }}
@@ -106,19 +114,21 @@ export function MemoriesDump({
                 transition: { duration: 0.2 },
               }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => onSelectPhoto(photo, index)}
+              onClick={() => handlePhotoClick(photo, index)}
               className="group relative cursor-pointer rounded-sm border-4 sm:border-[10px] border-cream bg-cream p-1 shadow-[0_12px_25px_rgba(0,0,0,0.6)] transition-all duration-300 hover:shadow-[0_25px_40px_rgba(0,0,0,0.8)] select-none"
             >
               {/* Masking Tape on Top Center */}
               <MaskingTape className="-top-3 sm:-top-4 left-1/2 -translate-x-1/2 rotate-[-2deg] group-hover:rotate-0 transition-transform scale-75 sm:scale-100" />
 
               {/* Polaroid Image Frame */}
-              <div className="relative aspect-square w-full overflow-hidden bg-black/20 rounded-xs">
+              <div className="relative aspect-square w-full overflow-hidden bg-cocoa/10 rounded-xs">
                 {signedUrl ? (
                   <img
                     src={signedUrl}
                     alt={photo.caption || "Memory photo"}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className={`h-full w-full object-cover transition-all duration-700 ${
+                      isUnwrapped ? "scale-100 blur-none opacity-100" : "scale-105 blur-xs opacity-80"
+                    }`}
                     loading="lazy"
                   />
                 ) : (
@@ -128,8 +138,37 @@ export function MemoriesDump({
                   </div>
                 )}
 
+                {/* Satin Gift Ribbon Overlay if not unwrapped yet */}
+                <AnimatePresence>
+                  {!isUnwrapped && (
+                    <motion.div
+                      key="gift-wrapper"
+                      initial={{ opacity: 1 }}
+                      exit={{ opacity: 0, scale: 1.2 }}
+                      transition={{ duration: 0.5 }}
+                      className="absolute inset-0 bg-cocoa/45 backdrop-blur-[2px] flex flex-col items-center justify-center p-2 text-center"
+                    >
+                      {/* Cross Ribbon */}
+                      <div className="absolute inset-x-0 top-1/2 h-3.5 -translate-y-1/2 bg-gradient-to-r from-gold/90 via-amber-200 to-gold/90 shadow-sm border-y border-gold/40" />
+                      <div className="absolute inset-y-0 left-1/2 w-3.5 -translate-x-1/2 bg-gradient-to-b from-gold/90 via-amber-200 to-gold/90 shadow-sm border-x border-gold/40" />
+
+                      {/* Gold Wax Seal / Bow Button */}
+                      <motion.div
+                        whileHover={{ scale: 1.15, rotate: 10 }}
+                        className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full bg-rose border-2 border-gold shadow-md"
+                      >
+                        <Heart className="h-4 w-4 text-cream fill-cream" />
+                      </motion.div>
+
+                      <span className="relative z-10 mt-2 rounded-full bg-cream/95 px-2.5 py-0.5 text-[10px] font-medium text-cocoa shadow-xs">
+                        ✨ Tap to unwrap
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 {photo.featured && (
-                  <span className="absolute top-2 right-2 rounded-full bg-gold/90 p-1 text-cocoa shadow-xs">
+                  <span className="absolute top-2 right-2 z-20 rounded-full bg-gold/90 p-1 text-cocoa shadow-xs">
                     <Heart className="h-3.5 w-3.5 fill-cocoa" />
                   </span>
                 )}

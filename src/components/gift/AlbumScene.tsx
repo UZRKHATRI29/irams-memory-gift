@@ -348,6 +348,11 @@ export function AlbumScene() {
               )}
 
               <div className="flex flex-col items-center">
+                <div className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/15 px-3 py-1 text-xs font-medium text-cocoa">
+                  <Sparkles className="h-3.5 w-3.5 text-gold fill-gold" />
+                  <span>🎁 Memory Unwrapped</span>
+                </div>
+
                 <div className="max-h-[60vh] w-full overflow-hidden rounded-lg bg-cocoa/5 flex items-center justify-center">
                   <img
                     src={getUrl(currentPhoto.image_url)}
