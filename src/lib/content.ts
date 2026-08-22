@@ -22,6 +22,7 @@ export type SiteSettings = {
   final_message: string;
   closing_message: string;
   birthday_date: string | null;
+  enable_countdown: boolean;
   music_url: string | null;
   music_enabled: boolean;
 };
@@ -89,7 +90,8 @@ I hope this year gives you a hundred little reasons to smile, lots of moments wo
 
 I'm really lucky I get to call you my sister.`,
   closing_message: "Now go enjoy your day — you've officially unlocked all your presents.",
-  birthday_date: null,
+  birthday_date: "2026-08-28T00:00:00",
+  enable_countdown: true,
   music_url: null,
   music_enabled: false,
 };

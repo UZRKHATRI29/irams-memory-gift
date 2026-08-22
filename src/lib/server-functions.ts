@@ -78,10 +78,33 @@ export async function getGiftsFn(opts?: { data?: { includeHidden?: boolean } }) 
 export async function updateSettingsFn(opts: { data: Partial<SiteSettings> }) {
   const data = opts.data;
   try {
+    // Ensure new settings columns exist in database table
+    try {
+      await runQuery(`
+        ALTER TABLE site_settings 
+        ADD COLUMN IF NOT EXISTS birthday_date TEXT,
+        ADD COLUMN IF NOT EXISTS enable_countdown BOOLEAN DEFAULT true;
+      `);
+    } catch (e) {
+      // Ignore if database lacks DDL permissions
+    }
+
     const existing = await runQuery("SELECT id FROM site_settings LIMIT 1");
     if (existing.length > 0) {
       await runQuery(
-        `UPDATE site_settings SET recipient_name = $1, signature = $2, opening_heading = $3, opening_message = $4, opening_button_text = $5, final_heading = $6, final_message = $7, closing_message = $8, updated_at = NOW() WHERE id = $9`,
+        `UPDATE site_settings SET 
+          recipient_name = $1, 
+          signature = $2, 
+          opening_heading = $3, 
+          opening_message = $4, 
+          opening_button_text = $5, 
+          final_heading = $6, 
+          final_message = $7, 
+          closing_message = $8,
+          birthday_date = $9,
+          enable_countdown = $10,
+          updated_at = NOW() 
+        WHERE id = $11`,
         [
           data.recipient_name || "Iram",
           data.signature || "Your sister",
@@ -91,12 +114,14 @@ export async function updateSettingsFn(opts: { data: Partial<SiteSettings> }) {
           data.final_heading || "",
           data.final_message || "",
           data.closing_message || "",
+          data.birthday_date ?? "2026-08-28T00:00:00",
+          data.enable_countdown ?? true,
           existing[0].id,
         ]
       );
     } else {
       await runQuery(
-        `INSERT INTO site_settings (recipient_name, signature, opening_heading, opening_message, opening_button_text, final_heading, final_message, closing_message) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        `INSERT INTO site_settings (recipient_name, signature, opening_heading, opening_message, opening_button_text, final_heading, final_message, closing_message, birthday_date, enable_countdown) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
         [
           data.recipient_name || "Iram",
           data.signature || "Your sister",
@@ -106,6 +131,8 @@ export async function updateSettingsFn(opts: { data: Partial<SiteSettings> }) {
           data.final_heading || "",
           data.final_message || "",
           data.closing_message || "",
+          data.birthday_date ?? "2026-08-28T00:00:00",
+          data.enable_countdown ?? true,
         ]
       );
     }

@@ -340,6 +340,40 @@ function SettingsEditor() {
         </div>
       </div>
 
+      {/* Birthday Countdown Settings */}
+      <div className="space-y-4 border-t border-walnut/15 pt-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-medium text-cocoa flex items-center gap-2">
+            <span>🎂 Birthday Countdown Settings</span>
+          </h3>
+          <label className="flex items-center gap-2 text-xs text-cocoa cursor-pointer">
+            <input
+              type="checkbox"
+              checked={form.enable_countdown ?? true}
+              onChange={(e) => setForm({ ...form, enable_countdown: e.target.checked })}
+              className="rounded border-walnut/30 text-cocoa focus:ring-cocoa"
+            />
+            <span className="font-medium">Enable Countdown Screen</span>
+          </label>
+        </div>
+
+        <div>
+          <label className="block text-xs font-medium text-cocoa uppercase tracking-wider">
+            Birthday Target Date & Time
+          </label>
+          <input
+            type="text"
+            placeholder="e.g. 2026-08-28T00:00:00"
+            value={form.birthday_date || "2026-08-28T00:00:00"}
+            onChange={(e) => setForm({ ...form, birthday_date: e.target.value })}
+            className="mt-1 w-full rounded-lg border border-walnut/30 bg-background px-3 py-2 text-sm text-cocoa"
+          />
+          <p className="mt-1 text-[11px] text-walnut/60">
+            Format: YYYY-MM-DDTHH:mm:ss (Defaults to August 28th)
+          </p>
+        </div>
+      </div>
+
       <div className="space-y-4 border-t border-walnut/15 pt-4">
         <h3 className="text-lg font-medium text-cocoa">Opening Screen</h3>
         <div>

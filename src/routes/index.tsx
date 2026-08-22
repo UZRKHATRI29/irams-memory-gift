@@ -10,6 +10,7 @@ import { LetterScene } from "@/components/gift/LetterScene";
 import { BouquetScene } from "@/components/gift/BouquetScene";
 import { GiftsScene } from "@/components/gift/GiftsScene";
 import { FinalScene } from "@/components/gift/FinalScene";
+import { BirthdayCountdown } from "@/components/gift/BirthdayCountdown";
 
 type Stage = "opening" | "box" | "album" | "letter" | "bouquet" | "gifts" | "final";
 
@@ -27,6 +28,13 @@ export default function IndexPage() {
     "A small quiet corner of the internet, made with love, memories, and warm sisterly feelings. Step inside whenever you're ready.";
   const openingButtonText = settings?.opening_button_text || "unfold the gift";
 
+  const targetDateStr = settings?.birthday_date || "2026-08-28T00:00:00";
+  const enableCountdown = settings?.enable_countdown ?? true;
+
+  const targetDate = new Date(targetDateStr);
+  const isBeforeTarget = !isNaN(targetDate.getTime()) && new Date() < targetDate;
+  const shouldShowCountdown = enableCountdown && isBeforeTarget;
+
   const handleSelectBoxObject = (dest: BoxDestination) => {
     setExplored((prev) => new Set([...prev, dest]));
     setStage(dest);
@@ -37,6 +45,15 @@ export default function IndexPage() {
   const handleReplay = () => {
     setStage("box");
   };
+
+  if (shouldShowCountdown) {
+    return (
+      <BirthdayCountdown
+        targetDateStr={targetDateStr}
+        recipientName={recipient}
+      />
+    );
+  }
 
   return (
     <main className="relative min-h-[100svh] w-full overflow-hidden bg-background font-sans text-foreground paper grain">
