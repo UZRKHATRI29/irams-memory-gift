@@ -21,6 +21,16 @@ export default function IndexPage() {
   const [explored, setExplored] = useState<Set<BoxDestination>>(new Set());
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
+  const [isAdminBypassed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    const searchParams = new URLSearchParams(window.location.search);
+    const isPreviewParam =
+      searchParams.get("preview") === "true" || searchParams.get("admin") === "true";
+    const isAdminSession = sessionStorage.getItem("admin_session") === "true";
+    const isLocalStorageBypass = localStorage.getItem("admin_preview_bypass") === "true";
+    return isPreviewParam || isAdminSession || isLocalStorageBypass;
+  });
+
   const recipient = settings?.recipient_name || "Iram";
   const openingHeading = settings?.opening_heading || `Happy Birthday, ${recipient}`;
   const openingMessage =
@@ -33,7 +43,7 @@ export default function IndexPage() {
 
   const targetDate = new Date(targetDateStr);
   const isBeforeTarget = !isNaN(targetDate.getTime()) && new Date() < targetDate;
-  const shouldShowCountdown = enableCountdown && isBeforeTarget;
+  const shouldShowCountdown = enableCountdown && isBeforeTarget && !isAdminBypassed;
 
   const handleSelectBoxObject = (dest: BoxDestination) => {
     setExplored((prev) => new Set([...prev, dest]));

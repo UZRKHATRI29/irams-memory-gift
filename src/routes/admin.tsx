@@ -99,12 +99,12 @@ export default function AdminPage() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
           <div className="flex items-center gap-3">
             <Link
-              to="/"
+              to="/?preview=true"
               className="flex items-center gap-1.5 rounded-full border border-walnut/25 bg-cream px-3 py-1 text-xs text-cocoa font-medium shadow-xs hover:bg-beige transition-colors"
-              title="Open website in current window"
+              title="Open full website in current window"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Back to Gift</span>
+              <span>Back to Gift Box</span>
             </Link>
             <span className="text-walnut/30">|</span>
             <div className="flex items-center gap-2">
@@ -115,13 +115,13 @@ export default function AdminPage() {
 
           <div className="flex items-center gap-2">
             <Link
-              to="/"
+              to="/?preview=true"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full border border-gold/50 bg-gold/15 px-3 py-1.5 text-xs text-cocoa font-semibold shadow-xs hover:bg-gold/30 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full border border-gold/50 bg-gold/15 px-3.5 py-1.5 text-xs text-cocoa font-semibold shadow-xs hover:bg-gold/30 transition-colors"
             >
               <Eye className="h-3.5 w-3.5 text-gold fill-gold/40" />
-              <span>Open Live Website ↗</span>
+              <span>Open Live Website (No Countdown) ↗</span>
             </Link>
 
             <button
@@ -1175,13 +1175,13 @@ function WebsitePreviewViewer() {
 
           {/* Open Fullscreen */}
           <Link
-            to="/"
+            to="/?preview=true"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 rounded-full bg-cocoa px-4 py-1.5 text-xs font-medium text-cream hover:bg-cocoa/90 transition-colors shadow-xs"
           >
             <ExternalLink className="h-3.5 w-3.5" />
-            <span>Open Fullscreen</span>
+            <span>Open Fullscreen (No Countdown)</span>
           </Link>
         </div>
       </div>
@@ -1201,8 +1201,8 @@ function WebsitePreviewViewer() {
 
           <iframe
             key={iframeKey}
-            src="/"
-            title="Live Gift Preview"
+            src="/?preview=true"
+            title="Live Gift Preview (Countdown Bypassed)"
             className="h-full w-full border-none bg-background"
           />
         </div>
