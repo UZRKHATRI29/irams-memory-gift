@@ -46,14 +46,18 @@ import {
   Eye,
   EyeOff,
   Sparkles,
+  Smartphone,
+  Monitor,
+  RotateCw,
+  ExternalLink,
 } from "lucide-react";
 
-type Tab = "settings" | "photos" | "letter" | "bouquet" | "gifts";
+type Tab = "preview" | "settings" | "photos" | "letter" | "bouquet" | "gifts";
 
 export default function AdminPage() {
   const [session, setSession] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<Tab>("settings");
+  const [activeTab, setActiveTab] = useState<Tab>("preview");
 
   useEffect(() => {
     const isAuth = sessionStorage.getItem("admin_session") === "true";
@@ -96,7 +100,8 @@ export default function AdminPage() {
           <div className="flex items-center gap-3">
             <Link
               to="/"
-              className="flex items-center gap-1 text-xs text-walnut/70 hover:text-cocoa transition-colors"
+              className="flex items-center gap-1.5 rounded-full border border-walnut/25 bg-cream px-3 py-1 text-xs text-cocoa font-medium shadow-xs hover:bg-beige transition-colors"
+              title="Open website in current window"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Back to Gift</span>
@@ -104,21 +109,44 @@ export default function AdminPage() {
             <span className="text-walnut/30">|</span>
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-cocoa" />
-              <h1 className="font-serif text-lg font-medium text-cocoa">Admin Dashboard (PostgreSQL Node Server)</h1>
+              <h1 className="font-serif text-lg font-medium text-cocoa">Admin Dashboard</h1>
             </div>
           </div>
 
-          <button
-            onClick={handleSignOut}
-            className="inline-flex items-center gap-1.5 rounded-full border border-walnut/20 bg-cream px-3 py-1.5 text-xs text-walnut hover:bg-beige transition-colors cursor-pointer"
-          >
-            <LogOut className="h-3.5 w-3.5" />
-            <span>Sign Out</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-gold/50 bg-gold/15 px-3 py-1.5 text-xs text-cocoa font-semibold shadow-xs hover:bg-gold/30 transition-colors"
+            >
+              <Eye className="h-3.5 w-3.5 text-gold fill-gold/40" />
+              <span>Open Live Website ↗</span>
+            </Link>
+
+            <button
+              onClick={handleSignOut}
+              className="inline-flex items-center gap-1.5 rounded-full border border-walnut/20 bg-cream px-3 py-1.5 text-xs text-walnut hover:bg-beige transition-colors cursor-pointer"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span>Sign Out</span>
+            </button>
+          </div>
         </div>
 
         {/* Tabs Bar */}
         <div className="mx-auto flex max-w-6xl overflow-x-auto px-4 sm:px-6">
+          <button
+            onClick={() => setActiveTab("preview")}
+            className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
+              activeTab === "preview"
+                ? "border-cocoa text-cocoa font-semibold"
+                : "border-transparent text-walnut/70 hover:text-cocoa"
+            }`}
+          >
+            <Eye className="h-4 w-4 text-rose" />
+            <span>👁️ Live Website Preview</span>
+          </button>
           <button
             onClick={() => setActiveTab("settings")}
             className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors cursor-pointer ${
@@ -178,7 +206,8 @@ export default function AdminPage() {
       </header>
 
       {/* Main Content Area */}
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+        {activeTab === "preview" && <WebsitePreviewViewer />}
         {activeTab === "settings" && <SettingsEditor />}
         {activeTab === "photos" && <PhotosEditor />}
         {activeTab === "letter" && <LetterEditor />}
@@ -1090,3 +1119,95 @@ function GiftsEditor() {
     </div>
   );
 }
+
+/* =========================================================================
+ * 7. Live Website Preview Viewer Component
+ * ========================================================================= */
+function WebsitePreviewViewer() {
+  const [deviceMode, setDeviceMode] = useState<"desktop" | "mobile">("desktop");
+  const [iframeKey, setIframeKey] = useState(0);
+
+  const handleReload = () => {
+    setIframeKey((prev) => prev + 1);
+  };
+
+  return (
+    <div className="space-y-4">
+      {/* Control Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-walnut/20 bg-cream p-4 shadow-paper">
+        <div className="flex items-center gap-2">
+          <span className="font-serif text-lg text-cocoa font-medium">Live Website Preview</span>
+          <span className="text-xs text-walnut/60">(interactive real-time view)</span>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Device Toggle */}
+          <div className="flex items-center gap-1 rounded-full border border-walnut/25 bg-background p-1 text-xs">
+            <button
+              onClick={() => setDeviceMode("desktop")}
+              className={`flex items-center gap-1 rounded-full px-3 py-1 text-cocoa transition-colors cursor-pointer ${
+                deviceMode === "desktop" ? "bg-cream shadow-xs font-semibold" : "text-walnut/70 hover:text-cocoa"
+              }`}
+            >
+              <Monitor className="h-3.5 w-3.5" />
+              <span>Desktop</span>
+            </button>
+            <button
+              onClick={() => setDeviceMode("mobile")}
+              className={`flex items-center gap-1 rounded-full px-3 py-1 text-cocoa transition-colors cursor-pointer ${
+                deviceMode === "mobile" ? "bg-cream shadow-xs font-semibold" : "text-walnut/70 hover:text-cocoa"
+              }`}
+            >
+              <Smartphone className="h-3.5 w-3.5" />
+              <span>Mobile (375px)</span>
+            </button>
+          </div>
+
+          {/* Refresh Frame */}
+          <button
+            onClick={handleReload}
+            className="inline-flex items-center gap-1 rounded-full border border-walnut/20 bg-cream px-3 py-1.5 text-xs text-cocoa hover:bg-beige transition-colors cursor-pointer"
+            title="Reload live preview"
+          >
+            <RotateCw className="h-3.5 w-3.5 text-walnut" />
+            <span>Reload</span>
+          </button>
+
+          {/* Open Fullscreen */}
+          <Link
+            to="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded-full bg-cocoa px-4 py-1.5 text-xs font-medium text-cream hover:bg-cocoa/90 transition-colors shadow-xs"
+          >
+            <ExternalLink className="h-3.5 w-3.5" />
+            <span>Open Fullscreen</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Frame Container */}
+      <div className="flex justify-center rounded-2xl border border-walnut/25 bg-background/50 p-2 sm:p-4 shadow-lift overflow-hidden">
+        <div
+          className={`relative transition-all duration-300 ${
+            deviceMode === "mobile"
+              ? "w-[375px] h-[720px] rounded-[36px] border-[8px] border-walnut/80 bg-cocoa shadow-2xl overflow-hidden"
+              : "w-full h-[780px] rounded-xl border border-walnut/20 overflow-hidden"
+          }`}
+        >
+          {deviceMode === "mobile" && (
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 h-3.5 w-24 rounded-full bg-walnut/80 z-20" />
+          )}
+
+          <iframe
+            key={iframeKey}
+            src="/"
+            title="Live Gift Preview"
+            className="h-full w-full border-none bg-background"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
