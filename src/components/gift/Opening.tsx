@@ -33,7 +33,7 @@ export function Opening({ heading, message, buttonText, onOpen }: Props) {
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        className="text-5xl leading-tight text-cocoa sm:text-6xl"
+        className="text-4xl leading-tight text-cocoa sm:text-6xl md:text-7xl font-serif max-w-xl"
       >
         {heading}
       </motion.h1>
@@ -42,7 +42,7 @@ export function Opening({ heading, message, buttonText, onOpen }: Props) {
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.1, duration: 1.1 }}
-        className="mt-5 max-w-md text-pretty text-[15px] leading-relaxed text-walnut/85"
+        className="mt-4 sm:mt-5 max-w-md text-pretty text-sm sm:text-[15px] leading-relaxed text-walnut/85 px-2"
       >
         {message}
       </motion.p>
@@ -51,11 +51,11 @@ export function Opening({ heading, message, buttonText, onOpen }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 1 }}
-        className="mt-10"
+        className="mt-8 sm:mt-10"
       >
         <button
           onClick={onOpen}
-          className="group relative inline-flex items-center gap-2 rounded-full border border-walnut/30 bg-cream/70 px-8 py-3 text-2xl text-cocoa shadow-paper transition-all duration-500 hover:-translate-y-0.5 hover:border-walnut/60 hover:bg-beige/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="group relative inline-flex items-center gap-2 rounded-full border border-walnut/30 bg-cream/80 px-6 py-2.5 sm:px-8 sm:py-3 text-xl sm:text-2xl text-cocoa shadow-paper transition-all duration-500 hover:-translate-y-0.5 hover:border-walnut/60 hover:bg-beige/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring cursor-pointer"
         >
           <span className="hand">{buttonText}</span>
           <span className="hand transition-transform duration-500 group-hover:translate-x-1">→</span>

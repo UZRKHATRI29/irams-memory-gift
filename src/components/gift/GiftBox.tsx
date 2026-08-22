@@ -109,7 +109,7 @@ function BoxObject({
       </span>
 
       {/* Badge Tooltip Label */}
-      <span className="hand mt-3 rounded-full border border-gold/40 bg-cream/90 px-4 py-1 text-lg text-cocoa shadow-paper backdrop-blur-xs transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-beige group-hover:shadow-lift font-medium">
+      <span className="hand mt-2 sm:mt-3 rounded-full border border-gold/40 bg-cream/95 px-2.5 py-0.5 sm:px-4 sm:py-1 text-sm sm:text-lg text-cocoa shadow-paper backdrop-blur-xs transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-beige group-hover:shadow-lift font-medium text-center">
         {tooltip}
       </span>
     </motion.button>
@@ -138,7 +138,7 @@ export function GiftBox({
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 1.04 }}
       transition={{ duration: 0.9, ease: EASE }}
-      className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-4 py-12"
+      className="relative z-10 flex min-h-[100svh] flex-col items-center justify-center px-3 py-8 sm:px-4 sm:py-12"
     >
       <motion.div
         animate={{ scale: opened ? 1 : 0.96, y: opened ? -10 : 10 }}
@@ -164,7 +164,7 @@ export function GiftBox({
           )}
         </AnimatePresence>
 
-        {/* Popping Objects (Matching Reference Image 1) */}
+        {/* Popping Objects */}
         <AnimatePresence>
           {opened && (
             <motion.div
@@ -172,7 +172,7 @@ export function GiftBox({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="relative z-20 mx-auto grid max-w-[480px] grid-cols-2 place-items-center gap-x-6 gap-y-10 pb-8 sm:gap-x-12"
+              className="relative z-20 mx-auto grid max-w-[480px] grid-cols-2 place-items-center gap-x-3 gap-y-6 sm:gap-x-12 sm:gap-y-10 pb-6 sm:pb-8"
             >
               <BoxObject tooltip="Scrapbook Memories" onClick={() => onSelect("album")} delay={0.65} drift={0.4}>
                 <AlbumObject />

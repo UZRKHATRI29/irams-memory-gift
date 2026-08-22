@@ -49,23 +49,23 @@ export function FinalScene({ onReplay }: { onReplay: () => void }) {
       </motion.div>
 
       {/* Heading */}
-      <h1 className="text-5xl text-cocoa sm:text-6xl md:text-7xl">{finalHeading}</h1>
+      <h1 className="text-3xl text-cocoa sm:text-6xl md:text-7xl font-serif">{finalHeading}</h1>
 
-      <p className="hand mt-3 text-2xl text-walnut/90">a grand birthday wish from the bottom of my heart</p>
+      <p className="hand mt-2 text-xl sm:text-2xl text-walnut/90">a grand birthday wish from the bottom of my heart</p>
 
-      <SprigLine className="mx-auto mt-6 h-8 w-64 text-taupe/60" />
+      <SprigLine className="mx-auto mt-4 h-6 w-48 sm:h-8 sm:w-64 text-taupe/60" />
 
       {/* Birthday Cake Interactive Section */}
-      <div className="my-10 flex flex-col items-center">
-        <div className="relative rounded-3xl border border-gold/40 bg-cream/90 p-8 shadow-lift backdrop-blur-sm paper">
-          <p className="hand mb-6 text-xl text-walnut">
+      <div className="my-6 sm:my-10 flex flex-col items-center">
+        <div className="relative w-full max-w-md rounded-2xl sm:rounded-3xl border border-gold/40 bg-cream/90 p-4 sm:p-8 shadow-lift backdrop-blur-sm paper">
+          <p className="hand mb-4 sm:mb-6 text-lg sm:text-xl text-walnut">
             {wished ? "✨ Wish Granted! ✨" : "Make a wish and tap the candles to blow them out:"}
           </p>
 
           {/* Cake Illustration */}
           <div className="relative mx-auto flex flex-col items-center justify-center">
             {/* Candles Row */}
-            <div className="flex gap-4 mb-2 z-10">
+            <div className="flex gap-2.5 sm:gap-4 mb-2 z-10">
               {candlesLit.map((isLit, i) => (
                 <button
                   key={i}
@@ -82,7 +82,7 @@ export function FinalScene({ onReplay }: { onReplay: () => void }) {
                         exit={{ scale: 0, opacity: 0 }}
                         transition={{ repeat: Infinity, duration: 1.2 }}
                       >
-                        <Flame className="h-6 w-6 text-gold fill-gold/80 filter drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]" />
+                        <Flame className="h-5 w-5 sm:h-6 sm:w-6 text-gold fill-gold/80 filter drop-shadow-[0_0_8px_rgba(250,204,21,0.8)]" />
                       </motion.div>
                     ) : (
                       <motion.div
@@ -90,30 +90,30 @@ export function FinalScene({ onReplay }: { onReplay: () => void }) {
                         initial={{ opacity: 0, y: 0 }}
                         animate={{ opacity: [0.8, 0], y: -10 }}
                         transition={{ duration: 1 }}
-                        className="h-6 w-1 rounded-full bg-walnut/40 blur-xs"
+                        className="h-5 w-1 rounded-full bg-walnut/40 blur-xs"
                       />
                     )}
                   </AnimatePresence>
-                  <div className="h-8 w-2 rounded-t-sm bg-cream border border-walnut/30" />
+                  <div className="h-7 w-1.5 sm:h-8 sm:w-2 rounded-t-sm bg-cream border border-walnut/30" />
                 </button>
               ))}
             </div>
 
             {/* Cake Top Layer */}
-            <div className="h-14 w-48 rounded-t-2xl border-x border-t border-walnut/20 bg-rose/25 relative flex items-center justify-center">
-              <span className="hand text-lg text-cocoa">Happy Birthday {recipient}</span>
+            <div className="h-12 w-40 sm:h-14 sm:w-48 rounded-t-2xl border-x border-t border-walnut/20 bg-rose/25 relative flex items-center justify-center">
+              <span className="hand text-base sm:text-lg text-cocoa">Happy Birthday {recipient}</span>
             </div>
             {/* Cake Bottom Layer */}
-            <div className="h-16 w-60 rounded-b-2xl border border-walnut/25 bg-beige/80 flex items-center justify-center shadow-md">
+            <div className="h-14 w-48 sm:h-16 sm:w-60 rounded-b-2xl border border-walnut/25 bg-beige/80 flex items-center justify-center shadow-md">
               <div className="flex gap-3">
-                <Heart className="h-4 w-4 text-rose fill-rose" />
-                <Sparkles className="h-4 w-4 text-gold" />
-                <Heart className="h-4 w-4 text-rose fill-rose" />
+                <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-rose fill-rose" />
+                <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-gold" />
+                <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-rose fill-rose" />
               </div>
             </div>
           </div>
 
-          <div className="mx-auto mt-4 h-4 w-64 rounded-[50%] bg-cocoa/20 blur-md" />
+          <div className="mx-auto mt-4 h-4 w-48 sm:w-64 rounded-[50%] bg-cocoa/20 blur-md" />
         </div>
       </div>
 
@@ -122,11 +122,11 @@ export function FinalScene({ onReplay }: { onReplay: () => void }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="rounded-2xl border border-walnut/20 bg-cream p-8 shadow-paper paper"
+        className="rounded-2xl border border-walnut/20 bg-cream p-5 sm:p-8 shadow-paper paper"
       >
-        <p className="font-serif text-xl sm:text-2xl leading-relaxed text-cocoa">{finalMessage}</p>
-        <p className="hand mt-6 text-2xl text-walnut/90">{closingMessage}</p>
-        <p className="hand mt-4 text-3xl text-cocoa font-medium">{signature}</p>
+        <p className="font-serif text-lg sm:text-2xl leading-relaxed text-cocoa">{finalMessage}</p>
+        <p className="hand mt-4 sm:mt-6 text-xl sm:text-2xl text-walnut/90">{closingMessage}</p>
+        <p className="hand mt-3 sm:mt-4 text-2xl sm:text-3xl text-cocoa font-medium">{signature}</p>
       </motion.div>
 
       {/* Replay / Reset Button */}
